@@ -317,13 +317,13 @@
       padding: 40px;
     }
     body.pc-mode .container {
-      max-width: 1100px;
+      max-width: 1300px; /* ★幅を1300pxに拡大 */
       padding: 40px 50px;
     }
     body.pc-mode #catForm {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      grid-template-columns: 1.6fr 1fr; /* ★地図(1.6)とフォーム(1)の比率に変更 */
+      gap: 32px; /* 余白も少し拡大 */
     }
     body.pc-mode .form-group {
       margin-bottom: 0;
@@ -337,7 +337,7 @@
     }
     body.pc-mode #catForm > .form-group:nth-of-type(1) #map {
       flex-grow: 1;
-      min-height: 500px;
+      min-height: 600px; /* ★高さも600pxに拡大してバランス調整 */
     }
     /* 右側カラム：その他入力項目 */
     body.pc-mode #catForm > .form-group:not(:nth-of-type(1)) {
