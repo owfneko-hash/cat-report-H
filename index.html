@@ -46,6 +46,7 @@
       background-color: var(--bg-color); 
       color: var(--text-main); 
       -webkit-tap-highlight-color: transparent;
+      transition: background-color 0.3s;
     }
 
     .container { 
@@ -59,6 +60,7 @@
       border: 1px solid var(--border-color); 
       box-sizing: border-box; 
       animation: fadeIn 0.4s ease-out;
+      transition: max-width 0.4s ease, padding 0.4s ease;
     }
 
     /* ▼ ヘッダー＆タイトル ▼ */
@@ -90,7 +92,7 @@
       width: calc(100% - 32px); max-width: 400px; height: 64px;
       z-index: 20000;
       filter: drop-shadow(0 6px 16px rgba(0,0,0,0.08)); 
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1), max-width 0.4s ease;
       pointer-events: none;
     }
     .nav-wrapper.nav-hidden { transform: translate(-50%, 150px); }
@@ -194,7 +196,7 @@
 
     /* すりガラス風モーダル */
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(51, 105, 30, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 9999; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; }
-    .modal-content { background: rgba(241, 248, 233, 0.98); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); width: 100%; max-width: 600px; max-height: 90vh; border-radius: var(--radius-lg); padding: 22px 18px; box-sizing: border-box; overflow-y: auto; border: 1px solid rgba(255,255,255,0.5); position: relative; text-align: center; animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
+    .modal-content { background: rgba(241, 248, 233, 0.98); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); width: 100%; max-width: 600px; max-height: 90vh; border-radius: var(--radius-lg); padding: 22px 18px; box-sizing: border-box; overflow-y: auto; border: 1px solid rgba(255,255,255,0.5); position: relative; text-align: center; animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 40px rgba(0,0,0,0.15); transition: max-width 0.4s ease; }
     .close-modal { position: absolute; top: 15px; right: 18px; font-size: 26px; color: var(--accent-primary); cursor: pointer; font-weight: bold; z-index: 1002; }
     
     #mapModal { padding: 0; }
@@ -250,77 +252,13 @@
     .custom-cluster { background: rgba(102, 187, 106, 0.9); border: 3px solid white; color: white; font-weight: bold; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 10px rgba(0,0,0,0.3); font-size: 14px; }
     .custom-cluster-large { background: rgba(67, 160, 71, 0.95); transform: scale(1.1); }
 
-    /* ゲーム風ローディング画面 */
-    .loading-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(241, 248, 233, 0.95); backdrop-filter: blur(4px); z-index: 2000; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 15px; transition: opacity 0.3s ease, visibility 0.3s ease; }
-    .loading-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-    .loading-text { color: var(--accent-primary); font-size: 18px; font-weight: 900; letter-spacing: 2px; margin-top: 10px; }
-    .spinner { width: 50px; height: 50px; border: 6px solid rgba(102, 187, 106, 0.15); border-left-color: var(--accent-primary); border-radius: 50%; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    
-    /* =========================================
-       記録完了モーション（上部200度エフェクト統合版）
-       ========================================= */
-    .modal-success { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 10000; justify-content: center; align-items: center; }
-    .modal-success.active { display: flex; }
-    .success-stage { position: relative; width: 280px; height: 280px; background: white; border-radius: 36px; box-shadow: 0 16px 40px rgba(0,0,0,0.25); display: flex; flex-direction: column; justify-content: center; align-items: center; }
-
-    .success-ripple { position: absolute; bottom: 100px; width: 50px; height: 16px; background: rgba(76, 175, 80, 0.25); border-radius: 50%; transform: scale(0); opacity: 0; }
-    .success-ripple.animate { animation: ripple-effect 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.35s forwards; }
-
-    .success-pin-wrapper { position: absolute; bottom: 105px; transform: translateY(-250px); opacity: 0; z-index: 2; }
-    .success-pin-wrapper.animate { animation: drop-bounce 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-
-    /* --- 弾けるエフェクト（ピン上部に配置） --- */
-    .burst-wrapper { position: absolute; bottom: 148px; left: 50%; transform: translateX(-50%); width: 0; height: 0; z-index: 3; pointer-events: none; }
-    .flash-ring { position: absolute; top: -24px; left: -24px; width: 48px; height: 48px; border: 3px solid #66BB6A; border-radius: 50%; box-sizing: border-box; opacity: 0; }
-    .arm { position: absolute; top: 0; left: 0; width: 0; height: 0; }
-    
-    /* 放射アーム（中心軸） */
-    .arm:nth-child(2)  { transform: rotate(-100deg); }
-    .arm:nth-child(3)  { transform: rotate(-75deg); }
-    .arm:nth-child(4)  { transform: rotate(-50deg); }
-    .arm:nth-child(5)  { transform: rotate(-25deg); }
-    .arm:nth-child(6)  { transform: rotate(0deg); }
-    .arm:nth-child(7)  { transform: rotate(25deg); }
-    .arm:nth-child(8)  { transform: rotate(50deg); }
-    .arm:nth-child(9)  { transform: rotate(75deg); }
-    .arm:nth-child(10) { transform: rotate(100deg); }
-    
-    .dot { position: absolute; top: -5px; left: -5px; width: 10px; height: 10px; border-radius: 50%; background-color: #66BB6A; opacity: 0; }
-    .arm:nth-child(even) .dot { background-color: #ffc107; width: 8px; height: 8px; left: -4px; }
-
-    .burst-wrapper.animate .flash-ring { animation: ring-pop 0.35s cubic-bezier(0.1, 0.8, 0.3, 1) 0.45s forwards; }
-    .burst-wrapper.animate .dot { animation: dot-pop 0.45s cubic-bezier(0.1, 0.8, 0.3, 1) 0.45s forwards; }
-
-    .success-status-text { position: absolute; bottom: 55px; font-size: 20px; font-weight: 900; color: #4CAF50; letter-spacing: 2px; opacity: 0; transform: translateY(10px); z-index: 1; text-shadow: 0 4px 12px rgba(76, 175, 80, 0.2); }
-    .success-status-text.animate { animation: text-appear 0.4s ease-out 0.55s forwards; }
-
-    @keyframes drop-bounce { 0% { transform: translateY(-220px) scale(0.8); opacity: 0; } 35% { opacity: 1; } 55% { transform: translateY(0) scaleY(0.7) scaleX(1.3); } 72% { transform: translateY(-16px) scaleY(1.15) scaleX(0.88); } 85% { transform: translateY(0) scaleY(0.95) scaleX(1.05); } 100% { transform: translateY(0) scale(1); opacity: 1; } }
-    @keyframes ripple-effect { 0% { transform: scale(0.2); opacity: 0.8; } 100% { transform: scale(2.5); opacity: 0; } }
-    @keyframes ring-pop { 0% { transform: scale(0.3); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
-    @keyframes dot-pop { 0% { transform: translateY(0) scale(0.3); opacity: 1; } 50% { opacity: 1; } 100% { transform: translateY(-55px) scale(1.1); opacity: 0; } }
-    @keyframes text-appear { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
-
-    #aggregatedMap { flex-grow: 1; height: 100%; width: 100%; z-index: 1; }
-    .history-item { background: white; padding: 14px; border-radius: var(--radius-s); border: 1px solid var(--border-color); margin-bottom: 12px; text-align: left; box-shadow: 0 2px 6px rgba(0,0,0,0.03); position: relative; }
-    .btn-edit { background-color: #29B6F6; color: white; padding: 8px 12px; border: none; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: bold; box-shadow: 0 3px 8px rgba(41, 182, 246, 0.3); margin-top: 8px; width: 100%; transition: all 0.2s ease; }
-    .btn-delete-history { position: absolute; top: 10px; right: 10px; background: transparent; border: none; cursor: pointer; padding: 6px; border-radius: 50%; transition: transform 0.2s, background 0.2s; display: flex; align-items: center; justify-content: center; }
-    .btn-delete-history img { width: 22px; height: 22px; object-fit: contain; pointer-events: none; }
-    .os-guide-container { margin-bottom: 18px; text-align: left; }
-    .os-toggle-btn { background: var(--accent-soft); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 12px; border-radius: var(--radius-s); width: 100%; font-weight: bold; cursor: pointer; font-size: 13px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; margin-bottom: 6px; }
-    .os-guide-content { background: white; padding: 12px 14px; border-radius: var(--radius-s); border: 1px solid var(--border-color); font-size: 13px; line-height: 1.6; color: var(--text-main); margin-bottom: 10px; }
-    .os-guide-content ol { margin: 0; padding-left: 18px; }
-    .pattern-menu { border: 1.5px solid var(--border-color); border-radius: var(--radius-s); overflow: hidden; background: white; margin-bottom: 10px; }
-    .pattern-item { padding: 10px 12px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; color: var(--text-main); font-weight: bold;}
-    .pattern-item.selected { background-color: var(--accent-soft); }
-    .pattern-item:last-child { border-bottom: none; }
-    .pattern-info { display: flex; align-items: center; gap: 8px; cursor: pointer; flex-grow: 1; }
-    .pattern-icon { font-size: 20px; display: inline-block; width: 36px; text-align: center; }
-    .pattern-check { width: 20px; color: var(--accent-primary); font-weight: bold; font-size: 15px; display: inline-block; }
-    .tag-container { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
-    .tag { background: var(--accent-light); color: var(--text-main); padding: 4px 10px; border-radius: 16px; font-size: 13px; display: inline-flex; align-items: center; font-weight: bold; border: 1px solid var(--border-color);}
-    .tag-close { margin-left: 6px; cursor: pointer; font-weight: bold; background: #81C784; color: white; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 10px; }
-    .custom-neko-icon { width: auto !important; height: 38px !important; object-fit: contain; filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.3)); }
+    /* トグルスイッチ用スタイル */
+    .toggle-switch { position: relative; display: inline-block; width: 46px; height: 26px; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 26px; }
+    .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+    input:checked + .slider { background-color: var(--accent-primary); }
+    input:checked + .slider:before { transform: translateX(20px); }
 
     /* =========================================
        ▼ レスポンシブ対応 (PC・タブレット向け) ▼
@@ -371,6 +309,121 @@
         top: -35px;
       }
     }
+
+    /* =========================================
+       ▼ PCモード（広画面レイアウト）専用スタイル ▼
+       ========================================= */
+    body.pc-mode {
+      padding: 40px;
+    }
+    body.pc-mode .container {
+      max-width: 1100px;
+      padding: 40px 50px;
+    }
+    body.pc-mode #catForm {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    body.pc-mode .form-group {
+      margin-bottom: 0;
+    }
+    /* 左側カラム：地図 */
+    body.pc-mode #catForm > .form-group:nth-of-type(1) {
+      grid-column: 1;
+      grid-row: 1 / 8;
+      display: flex;
+      flex-direction: column;
+    }
+    body.pc-mode #catForm > .form-group:nth-of-type(1) #map {
+      flex-grow: 1;
+      min-height: 500px;
+    }
+    /* 右側カラム：その他入力項目 */
+    body.pc-mode #catForm > .form-group:not(:nth-of-type(1)) {
+      grid-column: 2;
+    }
+    body.pc-mode #submitBtn {
+      grid-column: 1 / 3;
+      width: 50%;
+      justify-self: center;
+      margin-top: 30px;
+      font-size: 20px;
+      padding: 18px;
+    }
+    body.pc-mode #output {
+      grid-column: 1 / 3;
+    }
+    body.pc-mode .nav-wrapper {
+      max-width: 800px;
+    }
+    body.pc-mode .modal-content {
+      max-width: 700px;
+    }
+    body.pc-mode #mapModal .modal-content {
+      max-width: none;
+    }
+
+    /* 記録完了モーション */
+    .modal-success { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 10000; justify-content: center; align-items: center; }
+    .modal-success.active { display: flex; }
+    .success-stage { position: relative; width: 280px; height: 280px; background: white; border-radius: 36px; box-shadow: 0 16px 40px rgba(0,0,0,0.25); display: flex; flex-direction: column; justify-content: center; align-items: center; }
+
+    .success-ripple { position: absolute; bottom: 100px; width: 50px; height: 16px; background: rgba(76, 175, 80, 0.25); border-radius: 50%; transform: scale(0); opacity: 0; }
+    .success-ripple.animate { animation: ripple-effect 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.35s forwards; }
+
+    .success-pin-wrapper { position: absolute; bottom: 105px; transform: translateY(-250px); opacity: 0; z-index: 2; }
+    .success-pin-wrapper.animate { animation: drop-bounce 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+    .burst-wrapper { position: absolute; bottom: 148px; left: 50%; transform: translateX(-50%); width: 0; height: 0; z-index: 3; pointer-events: none; }
+    .flash-ring { position: absolute; top: -24px; left: -24px; width: 48px; height: 48px; border: 3px solid #66BB6A; border-radius: 50%; box-sizing: border-box; opacity: 0; }
+    .arm { position: absolute; top: 0; left: 0; width: 0; height: 0; }
+    
+    .arm:nth-child(2)  { transform: rotate(-100deg); }
+    .arm:nth-child(3)  { transform: rotate(-75deg); }
+    .arm:nth-child(4)  { transform: rotate(-50deg); }
+    .arm:nth-child(5)  { transform: rotate(-25deg); }
+    .arm:nth-child(6)  { transform: rotate(0deg); }
+    .arm:nth-child(7)  { transform: rotate(25deg); }
+    .arm:nth-child(8)  { transform: rotate(50deg); }
+    .arm:nth-child(9)  { transform: rotate(75deg); }
+    .arm:nth-child(10) { transform: rotate(100deg); }
+    
+    .dot { position: absolute; top: -5px; left: -5px; width: 10px; height: 10px; border-radius: 50%; background-color: #66BB6A; opacity: 0; }
+    .arm:nth-child(even) .dot { background-color: #ffc107; width: 8px; height: 8px; left: -4px; }
+
+    .burst-wrapper.animate .flash-ring { animation: ring-pop 0.35s cubic-bezier(0.1, 0.8, 0.3, 1) 0.45s forwards; }
+    .burst-wrapper.animate .dot { animation: dot-pop 0.45s cubic-bezier(0.1, 0.8, 0.3, 1) 0.45s forwards; }
+
+    .success-status-text { position: absolute; bottom: 55px; font-size: 20px; font-weight: 900; color: #4CAF50; letter-spacing: 2px; opacity: 0; transform: translateY(10px); z-index: 1; text-shadow: 0 4px 12px rgba(76, 175, 80, 0.2); }
+    .success-status-text.animate { animation: text-appear 0.4s ease-out 0.55s forwards; }
+
+    @keyframes drop-bounce { 0% { transform: translateY(-220px) scale(0.8); opacity: 0; } 35% { opacity: 1; } 55% { transform: translateY(0) scaleY(0.7) scaleX(1.3); } 72% { transform: translateY(-16px) scaleY(1.15) scaleX(0.88); } 85% { transform: translateY(0) scaleY(0.95) scaleX(1.05); } 100% { transform: translateY(0) scale(1); opacity: 1; } }
+    @keyframes ripple-effect { 0% { transform: scale(0.2); opacity: 0.8; } 100% { transform: scale(2.5); opacity: 0; } }
+    @keyframes ring-pop { 0% { transform: scale(0.3); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
+    @keyframes dot-pop { 0% { transform: translateY(0) scale(0.3); opacity: 1; } 50% { opacity: 1; } 100% { transform: translateY(-55px) scale(1.1); opacity: 0; } }
+    @keyframes text-appear { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+
+    #aggregatedMap { flex-grow: 1; height: 100%; width: 100%; z-index: 1; }
+    .history-item { background: white; padding: 14px; border-radius: var(--radius-s); border: 1px solid var(--border-color); margin-bottom: 12px; text-align: left; box-shadow: 0 2px 6px rgba(0,0,0,0.03); position: relative; }
+    .btn-edit { background-color: #29B6F6; color: white; padding: 8px 12px; border: none; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: bold; box-shadow: 0 3px 8px rgba(41, 182, 246, 0.3); margin-top: 8px; width: 100%; transition: all 0.2s ease; }
+    .btn-delete-history { position: absolute; top: 10px; right: 10px; background: transparent; border: none; cursor: pointer; padding: 6px; border-radius: 50%; transition: transform 0.2s, background 0.2s; display: flex; align-items: center; justify-content: center; }
+    .btn-delete-history img { width: 22px; height: 22px; object-fit: contain; pointer-events: none; }
+    .os-guide-container { margin-bottom: 18px; text-align: left; }
+    .os-toggle-btn { background: var(--accent-soft); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 12px; border-radius: var(--radius-s); width: 100%; font-weight: bold; cursor: pointer; font-size: 13px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; margin-bottom: 6px; }
+    .os-guide-content { background: white; padding: 12px 14px; border-radius: var(--radius-s); border: 1px solid var(--border-color); font-size: 13px; line-height: 1.6; color: var(--text-main); margin-bottom: 10px; }
+    .os-guide-content ol { margin: 0; padding-left: 18px; }
+    .pattern-menu { border: 1.5px solid var(--border-color); border-radius: var(--radius-s); overflow: hidden; background: white; margin-bottom: 10px; }
+    .pattern-item { padding: 10px 12px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; color: var(--text-main); font-weight: bold;}
+    .pattern-item.selected { background-color: var(--accent-soft); }
+    .pattern-item:last-child { border-bottom: none; }
+    .pattern-info { display: flex; align-items: center; gap: 8px; cursor: pointer; flex-grow: 1; }
+    .pattern-icon { font-size: 20px; display: inline-block; width: 36px; text-align: center; }
+    .pattern-check { width: 20px; color: var(--accent-primary); font-weight: bold; font-size: 15px; display: inline-block; }
+    .tag-container { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+    .tag { background: var(--accent-light); color: var(--text-main); padding: 4px 10px; border-radius: 16px; font-size: 13px; display: inline-flex; align-items: center; font-weight: bold; border: 1px solid var(--border-color);}
+    .tag-close { margin-left: 6px; cursor: pointer; font-weight: bold; background: #81C784; color: white; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 10px; }
+    .custom-neko-icon { width: auto !important; height: 38px !important; object-fit: contain; filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.3)); }
   </style>
 </head>
 <body>
@@ -394,7 +447,6 @@
       </svg>
     </div>
 
-    <!-- ピン頭部を中心に広がるエフェクト -->
     <div id="successBurst" class="burst-wrapper">
       <div class="flash-ring"></div>
       <div class="arm"><div class="dot"></div></div>
@@ -457,6 +509,18 @@
       <button class="btn-action" onclick="saveSettingsName()">変更を保存する</button>
     </div>
     
+    <!-- ▼ PCモードの切り替えスイッチ ▼ -->
+    <div style="margin-top: 25px; text-align: left; border-top: 1px dashed var(--border-color); padding-top: 20px;">
+      <label>画面表示モード</label>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; background: white; padding: 12px; border-radius: var(--radius-s); border: 1px solid var(--border-color);">
+        <span style="font-size: 14px; font-weight: bold; color: var(--text-main);">PCモード（広画面用）</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="pcModeToggle" onchange="togglePcMode()">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
     <div style="margin-top: 25px; text-align: left; border-top: 1px dashed var(--border-color); padding-top: 20px;">
       <label>ホーム画面への追加方法</label>
       <div class="os-guide-container" style="margin-top:10px;">
@@ -744,6 +808,14 @@
 
     initCatCountOptions();
     updateOfflineCount();
+    
+    // ▼ PCモードの初期状態を読み込む ▼
+    const savedPcMode = localStorage.getItem('nekoLogPcMode');
+    if (savedPcMode === 'true') {
+      document.getElementById('pcModeToggle').checked = true;
+      document.body.classList.add('pc-mode');
+    }
+
     const savedName = localStorage.getItem('nekoLogName');
     if (!savedName) {
       document.getElementById('welcomeModal').style.display = 'flex';
@@ -774,6 +846,22 @@
 
   function showNav() {
     document.getElementById('navWrapper').classList.remove('nav-hidden');
+  }
+
+  // ▼ PCモードの切り替え処理 ▼
+  function togglePcMode() {
+    const isPc = document.getElementById('pcModeToggle').checked;
+    if (isPc) {
+      document.body.classList.add('pc-mode');
+      localStorage.setItem('nekoLogPcMode', 'true');
+    } else {
+      document.body.classList.remove('pc-mode');
+      localStorage.setItem('nekoLogPcMode', 'false');
+    }
+    // レイアウト変更に合わせてマップサイズを再計算
+    setTimeout(() => {
+      if (map) map.invalidateSize();
+    }, 450);
   }
 
   function initCatCountOptions() {
