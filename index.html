@@ -21,18 +21,17 @@
 
   <style>
     :root {
-      --bg-color: #F1F8E9; /* 薄い緑系の背景 */
+      --bg-color: #F1F8E9;
       --card-bg: #FFFFFF;
-      --accent-primary: #66BB6A; /* メインの緑 */
-      --accent-hover: #43A047; /* ホバー時の濃い緑 */
-      --accent-light: #C8E6C9; /* 薄い緑（タグなど） */
-      --accent-soft: #E8F5E9; /* さらに薄い緑（フォーム背景など） */
+      --accent-primary: #66BB6A;
+      --accent-hover: #43A047;
+      --accent-light: #C8E6C9;
+      --accent-soft: #E8F5E9;
       
-      /* ボトムナビ用の緑 */
       --nav-green-light: #81C784;
       --nav-green-dark: #4CAF50;
 
-      --text-main: #33691E; /* 文字色も緑がかった濃い色に */
+      --text-main: #33691E;
       --text-sub: #558B2F;
       --border-color: #C5E1A5;
       --radius-lg: 20px;
@@ -44,7 +43,7 @@
       font-family: 'M PLUS Rounded 1c', 'Hiragino Maru Gothic ProN', sans-serif; 
       margin: 0; 
       padding: 6px; 
-      padding-bottom: 120px; /* ボトムナビ用の余白をしっかり確保 */
+      padding-bottom: 120px; 
       background-color: var(--bg-color); 
       color: var(--text-main); 
       -webkit-tap-highlight-color: transparent;
@@ -52,9 +51,10 @@
 
     .container { 
       max-width: 600px; 
+      width: 100%;
       margin: 0 auto; 
       background: var(--card-bg); 
-      padding: 16px 10px; 
+      padding: 16px 12px; 
       border-radius: var(--radius-lg); 
       box-shadow: 0 6px 20px rgba(76, 175, 80, 0.08); 
       border: 1px solid var(--border-color); 
@@ -94,9 +94,7 @@
       transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
       pointer-events: none;
     }
-    .nav-wrapper.nav-hidden {
-      transform: translate(-50%, 150px);
-    }
+    .nav-wrapper.nav-hidden { transform: translate(-50%, 150px); }
 
     .bottom-nav {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -120,12 +118,9 @@
     .nav-spacer { width: 90px; flex-shrink: 0; pointer-events: none; }
 
     .nav-side-btn {
-      background: #FFFFFF; 
-      border: 1.5px solid rgba(76, 175, 80, 0.2); 
-      color: var(--nav-green-dark); 
-      font-weight: 900; font-size: 13px; height: 44px; flex: 1; margin: 0 4px;
-      cursor: pointer; transition: all 0.2s ease; 
-      display: flex; justify-content: center; align-items: center; 
+      background: #FFFFFF; border: 1.5px solid rgba(76, 175, 80, 0.2); 
+      color: var(--nav-green-dark); font-weight: 900; font-size: 13px; height: 44px; flex: 1; margin: 0 4px;
+      cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: center; align-items: center; 
       letter-spacing: 0.5px; border-radius: 22px;
     }
     .nav-side-btn:active { background: var(--accent-soft); transform: scale(0.95); }
@@ -327,6 +322,56 @@
     .tag { background: var(--accent-light); color: var(--text-main); padding: 4px 10px; border-radius: 16px; font-size: 13px; display: inline-flex; align-items: center; font-weight: bold; border: 1px solid var(--border-color);}
     .tag-close { margin-left: 6px; cursor: pointer; font-weight: bold; background: #81C784; color: white; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 10px; }
     .custom-neko-icon { width: auto !important; height: 38px !important; object-fit: contain; filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.3)); }
+
+    /* =========================================
+       ▼ レスポンシブ対応 (PC・タブレット向け) ▼
+       ========================================= */
+    @media (min-width: 768px) {
+      body {
+        padding: 24px;
+        padding-bottom: 120px;
+      }
+      .container {
+        max-width: 800px;
+        padding: 30px 40px;
+      }
+      .header-container {
+        margin-bottom: 25px;
+      }
+      .title-icon {
+        height: 50px;
+      }
+      h2 {
+        font-size: 32px;
+      }
+      .title-sub-text {
+        font-size: 13px;
+      }
+      .form-group {
+        padding: 20px;
+      }
+      #map {
+        height: 500px;
+      }
+      .nav-wrapper {
+        max-width: 600px;
+      }
+      .nav-side-btn {
+        font-size: 15px;
+        height: 50px;
+      }
+      .nav-fab {
+        width: 76px;
+        height: 76px;
+        font-size: 12px;
+        top: -20px;
+      }
+      .bottom-nav::before {
+        width: 106px;
+        height: 106px;
+        top: -35px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -666,7 +711,7 @@
 
 <script>
   // ==========================================
-  // GASのURL (変更済み)
+  // GASのURL
   // ==========================================
   const gasURL = "https://script.google.com/macros/s/AKfycbzrQ10Aq9k8jNR7RAwcpSTvYFFLze5ZJvEo_eLURK0_Ck_7HTs0ycmDVfgUN_bCmzSP/exec";
 
@@ -688,15 +733,12 @@
   if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); }); }
   
   window.addEventListener('DOMContentLoaded', () => {
-    // 東村全域が見渡せる座標とズームレベル（11）
     map = L.map('map').setView([26.64, 128.16], 11); 
     
-    // ▼ 変更箇所：国土地理院地図（標準地図） ▼
     L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">国土地理院</a>',
       maxZoom: 18
     }).addTo(map); 
-    // ▲ 変更箇所ここまで ▲
     
     map.on('click', function(e) { updateMarkerAndLocation(e.latlng); });
     setTimeout(() => { map.invalidateSize(); }, 300);
@@ -710,13 +752,11 @@
       else { document.getElementById('stepName').classList.remove('hidden'); }
     }
 
-    // ▼ 起動時にオフライン残存データを自動で裏側送信 ▼
     if (navigator.onLine) {
       setTimeout(() => { syncOfflineData(); }, 1000);
     }
   });
 
-  // ▼ オンライン復帰時にも自動送信 ▼
   window.addEventListener('online', () => {
     syncOfflineData();
   });
@@ -789,15 +829,12 @@
     const loader = document.getElementById('mapLoadingOverlay'); if (loader) loader.classList.remove('hidden');
     
     if (!aggMap) {
-      // みんなのねこマップも東村全域が見渡せるように（ズーム12）
       aggMap = L.map('aggregatedMap', { zoomControl: false }).setView([26.64, 128.16], 12);
       
-      // ▼ 変更箇所：国土地理院地図（標準地図） ▼
       L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">国土地理院</a>',
         maxZoom: 18
       }).addTo(aggMap);
-      // ▲ 変更箇所ここまで ▲
       
       L.control.zoom({ position: 'bottomleft' }).addTo(aggMap);
       
@@ -1136,12 +1173,10 @@
     try {
       const params = new URLSearchParams(); params.append('action', 'delete'); params.append('editId', id);
       
-      // 削除エラーを無視して強行
       fetch(gasURL, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: params, mode: "no-cors" }).catch(e => console.log(e));
       
       await deleteFromHistoryDB(id); 
       
-      // 送信待ちキューに同じIDがあれば消す
       const offlineData = await getFromOfflineDB();
       for (const item of offlineData) {
         if (item.data.editId === id) await deleteFromOfflineDB(item.key);
@@ -1232,7 +1267,7 @@
     elements.forEach(el => { if(el) el.classList.remove('animate'); });
     
     modal.classList.add('active');
-    void modal.offsetWidth; // reflow
+    void modal.offsetWidth; 
     
     elements.forEach(el => { if(el) el.classList.add('animate'); });
     
@@ -1242,12 +1277,10 @@
     }, 1600);
   }
 
-  // ▼ 通信処理（エラー時はthrowして呼び出し元で再送キューに入れる） ▼
   async function sendDataToGAS(dataObj) {
     const params = new URLSearchParams(); 
     for (const key in dataObj) { params.append(key, dataObj[key]); }
     
-    // fetchが通信エラーで失敗した場合は例外が飛び、catch側で拾われます
     await fetch(gasURL, { 
       method: "POST", 
       headers: { "Content-Type": "application/x-www-form-urlencoded" }, 
@@ -1256,7 +1289,6 @@
     });
   }
 
-  // ▼ バックグラウンドで溜まったデータを送信する関数 ▼
   async function syncOfflineData() {
     if (!navigator.onLine) {
       updateOfflineCount();
@@ -1284,29 +1316,24 @@
     }
   }
 
-  // ▼ 状況に応じた送信処理とUI表示 ▼
   async function processSubmission(dataObj) {
     document.getElementById('output').innerText = ""; 
     document.getElementById('submitBtn').disabled = false;
 
     if (navigator.onLine) {
-      // --- オンライン時：即完了モーション＆裏側送信 ---
       resetFormUI();
       triggerSuccessAnimation();
 
-      // awaitで待たずに裏で送信させることで、UI操作をブロックしません
       sendDataToGAS(dataObj).then(() => {
         saveToHistoryDB(dataObj);
         setTimeout(() => { loadMapMarkers(); }, 1500);
       }).catch(async (e) => {
-        // もし途中で通信が切れたりした場合のみ、オフラインDBへ退避します
         await saveToOfflineDB(dataObj);
         await saveToHistoryDB(dataObj);
         updateOfflineCount();
       });
       
     } else {
-      // --- オフライン時：送信待ちとして保存 ---
       resetFormUI();
       alert("現在オフラインです。\nデータは一時保存され、オンライン復帰後に自動で送信されます。");
       
