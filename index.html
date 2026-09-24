@@ -18,6 +18,9 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
   <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
 
+  <!-- EXIF読み取り用ライブラリ -->
+  <script src="https://cdn.jsdelivr.net/npm/exifr/dist/lite.umd.js"></script>
+
   <style>
     :root {
       --bg-color: #F1F8E9;
@@ -317,13 +320,13 @@
       padding: 40px;
     }
     body.pc-mode .container {
-      max-width: 1300px; /* ★幅を1300pxに拡大 */
+      max-width: 1400px; /* ★幅をさらに拡大(1400px) */
       padding: 40px 50px;
     }
     body.pc-mode #catForm {
       display: grid;
-      grid-template-columns: 1.6fr 1fr; /* ★地図(1.6)とフォーム(1)の比率に変更 */
-      gap: 32px; /* 余白も少し拡大 */
+      grid-template-columns: 2.2fr 1fr; /* ★地図(2.2)とフォーム(1)の比率に変更。地図をより広く */
+      gap: 32px;
     }
     body.pc-mode .form-group {
       margin-bottom: 0;
@@ -337,7 +340,7 @@
     }
     body.pc-mode #catForm > .form-group:nth-of-type(1) #map {
       flex-grow: 1;
-      min-height: 600px; /* ★高さも600pxに拡大してバランス調整 */
+      min-height: 600px;
     }
     /* 右側カラム：その他入力項目 */
     body.pc-mode #catForm > .form-group:not(:nth-of-type(1)) {
@@ -694,6 +697,7 @@
     <div class="form-group">
       <label for="photo">目撃写真（複数選択可）</label>
       <input type="file" id="photo" accept="image/*" multiple>
+      <p style="font-size: 11px; color: var(--text-sub); margin-top: 6px; margin-bottom: 0;">※写真に位置情報や撮影日時が含まれている場合、自動で入力されます。</p>
     </div>
 
     <div class="form-group">
@@ -825,6 +829,41 @@
 
     if (navigator.onLine) {
       setTimeout(() => { syncOfflineData(); }, 1000);
+    }
+  });
+
+  // ▼ 画像が選択された時にExifから位置情報と日時を自動入力 ▼
+  document.getElementById('photo').addEventListener('change', async function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      // exifrを使って画像のEXIF情報を取得
+      const exifData = await exifr.parse(file);
+      if (exifData) {
+        // 日時の設定
+        if (exifData.DateTimeOriginal) {
+          const date = new Date(exifData.DateTimeOriginal);
+          if (!isNaN(date.getTime())) {
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const dd = String(date.getDate()).padStart(2, '0');
+            const hh = String(date.getHours()).padStart(2, '0');
+            
+            document.getElementById('dateInput').value = `${yyyy}-${mm}-${dd}`;
+            document.getElementById('hourInput').value = hh;
+          }
+        }
+
+        // 位置情報の設定 (緯度・経度が存在する場合)
+        if (exifData.latitude !== undefined && exifData.longitude !== undefined) {
+          const latlng = L.latLng(exifData.latitude, exifData.longitude);
+          map.setView(latlng, 16); 
+          updateMarkerAndLocation(latlng);
+        }
+      }
+    } catch (err) {
+      console.warn("EXIFデータの読み取りに失敗しました", err);
     }
   });
 
