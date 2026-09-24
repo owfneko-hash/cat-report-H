@@ -6,7 +6,7 @@
   <title>ねこログ 東村</title>
   
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#FF8A65">
+  <meta name="theme-color" content="#81C784">
   <link rel="apple-touch-icon" href="icon-192.png">
 
   <!-- フォント・地図ライブラリ読み込み -->
@@ -21,20 +21,20 @@
 
   <style>
     :root {
-      --bg-color: #FAF6F0;
+      --bg-color: #F1F8E9; /* 薄い緑系の背景 */
       --card-bg: #FFFFFF;
-      --accent-primary: #FF7043;
-      --accent-hover: #F4511E;
-      --accent-light: #FFE0B2;
-      --accent-soft: #FFF3E0;
+      --accent-primary: #66BB6A; /* メインの緑 */
+      --accent-hover: #43A047; /* ホバー時の濃い緑 */
+      --accent-light: #C8E6C9; /* 薄い緑（タグなど） */
+      --accent-soft: #E8F5E9; /* さらに薄い緑（フォーム背景など） */
       
-      /* ボトムナビ用のオレンジ */
-      --nav-orange-light: #FF8A65;
-      --nav-orange-dark: #F4511E;
+      /* ボトムナビ用の緑 */
+      --nav-green-light: #81C784;
+      --nav-green-dark: #4CAF50;
 
-      --text-main: #3E2723;
-      --text-sub: #8D6E63;
-      --border-color: #E0D5D0;
+      --text-main: #33691E; /* 文字色も緑がかった濃い色に */
+      --text-sub: #558B2F;
+      --border-color: #C5E1A5;
       --radius-lg: 20px;
       --radius-m: 14px;
       --radius-s: 10px;
@@ -56,7 +56,7 @@
       background: var(--card-bg); 
       padding: 16px 10px; 
       border-radius: var(--radius-lg); 
-      box-shadow: 0 6px 20px rgba(230, 81, 0, 0.06); 
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.08); 
       border: 1px solid var(--border-color); 
       box-sizing: border-box; 
       animation: fadeIn 0.4s ease-out;
@@ -70,7 +70,7 @@
     .title-group { display: flex; align-items: center; gap: 8px; }
     .title-icon { 
       height: 40px; width: auto; vertical-align: middle; 
-      filter: drop-shadow(0px 2px 3px rgba(255, 112, 67, 0.2));
+      filter: drop-shadow(0px 2px 3px rgba(102, 187, 106, 0.3));
     }
     .title-text-box { display: flex; flex-direction: row; align-items: center; gap: 8px; }
     h2 { 
@@ -121,29 +121,29 @@
 
     .nav-side-btn {
       background: #FFFFFF; 
-      border: 1.5px solid rgba(244, 81, 30, 0.2); 
-      color: var(--nav-orange-dark); 
+      border: 1.5px solid rgba(76, 175, 80, 0.2); 
+      color: var(--nav-green-dark); 
       font-weight: 900; font-size: 13px; height: 44px; flex: 1; margin: 0 4px;
       cursor: pointer; transition: all 0.2s ease; 
       display: flex; justify-content: center; align-items: center; 
       letter-spacing: 0.5px; border-radius: 22px;
     }
-    .nav-side-btn:active { background: #FFF3E0; transform: scale(0.95); }
+    .nav-side-btn:active { background: var(--accent-soft); transform: scale(0.95); }
 
     .nav-fab {
       position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
       width: 68px; height: 68px; border-radius: 50%; border: none;
-      background: linear-gradient(135deg, var(--nav-orange-light) 0%, var(--nav-orange-dark) 100%); color: white;
+      background: linear-gradient(135deg, var(--nav-green-light) 0%, var(--nav-green-dark) 100%); color: white;
       display: flex; flex-direction: column; justify-content: center; align-items: center;
       font-weight: 900; font-size: 10px; line-height: 1.3;
-      box-shadow: 0 4px 12px rgba(244, 81, 30, 0.4);
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
       cursor: pointer; pointer-events: auto; transition: transform 0.2s ease;
     }
-    .nav-fab:active { transform: translateX(-50%) scale(0.92); box-shadow: 0 2px 6px rgba(244, 81, 30, 0.4); }
+    .nav-fab:active { transform: translateX(-50%) scale(0.92); box-shadow: 0 2px 6px rgba(76, 175, 80, 0.4); }
 
     .nav-pull-btn {
       position: fixed; right: -5px; bottom: 30px; z-index: 1001;
-      background: var(--nav-orange-dark); color: white;
+      background: var(--nav-green-dark); color: white;
       padding: 12px 16px 12px 12px; border-radius: 20px 0 0 20px;
       font-weight: bold; border: none; box-shadow: -2px 4px 12px rgba(0,0,0,0.15);
       transition: transform 0.3s ease; display: none; font-size: 12px; cursor: pointer;
@@ -162,19 +162,19 @@
     /* フォームグループ */
     .form-group { 
       margin-bottom: 18px; background: var(--accent-soft); padding: 14px; 
-      border-radius: var(--radius-m); border: 1px dashed #FFCC80; 
+      border-radius: var(--radius-m); border: 1px dashed var(--border-color); 
       transition: border-color 0.3s ease, background-color 0.3s ease;
     }
     .form-group:focus-within { border-color: var(--accent-primary); background: #FFF; }
-    label { font-weight: 700; display: block; margin-bottom: 8px; color: #D84315; font-size: 15px; }
-    .required::after { content: " *"; color: #FF3D00; }
+    label { font-weight: 700; display: block; margin-bottom: 8px; color: #2E7D32; font-size: 15px; }
+    .required::after { content: " *"; color: #E53935; }
     
     #map { height: 400px; width: 100%; border-radius: var(--radius-s); border: 1.5px solid var(--border-color); box-sizing: border-box; }
     .hidden { display: none !important; }
     
     input[type="text"], select, input[type="date"], textarea { width: 100%; padding: 10px 12px; border: 1.5px solid var(--border-color); border-radius: var(--radius-s); box-sizing: border-box; font-size: 15px; font-family: inherit; background: white; color: var(--text-main); transition: all 0.2s ease; }
-    input[type="text"]:focus, select:focus, input[type="date"]:focus, textarea:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(255, 112, 67, 0.15); }
-    input[type="file"] { width: 100%; padding: 8px; border: 1.5px dashed #FFB74D; border-radius: var(--radius-s); box-sizing: border-box; font-size: 13px; font-family: inherit; background: white; color: var(--text-main); white-space: normal; word-break: break-all; }
+    input[type="text"]:focus, select:focus, input[type="date"]:focus, textarea:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(102, 187, 106, 0.15); }
+    input[type="file"] { width: 100%; padding: 8px; border: 1.5px dashed var(--accent-light); border-radius: var(--radius-s); box-sizing: border-box; font-size: 13px; font-family: inherit; background: white; color: var(--text-main); white-space: normal; word-break: break-all; }
     input[type="file"]::file-selector-button { background: var(--accent-light); color: var(--text-main); border: none; border-radius: 8px; padding: 6px 12px; font-weight: bold; cursor: pointer; margin-right: 10px; transition: background 0.2s ease; }
 
     /* カウントリスト */
@@ -191,16 +191,16 @@
     .count-num { font-weight: 900; font-size: 16px; min-width: 24px; text-align: center; color: var(--text-main); }
     .count-num.active { color: var(--accent-primary); }
 
-    .btn-action { background: linear-gradient(135deg, #FF8A65 0%, #FF7043 100%); color: white; padding: 11px 14px; border: none; border-radius: var(--radius-m); cursor: pointer; font-size: 14px; font-weight: bold; margin-bottom: 10px; display: block; width: 100%; box-sizing: border-box; box-shadow: 0 4px 12px rgba(255, 112, 67, 0.2); transition: all 0.2s ease; }
+    .btn-action { background: linear-gradient(135deg, #81C784 0%, #66BB6A 100%); color: white; padding: 11px 14px; border: none; border-radius: var(--radius-m); cursor: pointer; font-size: 14px; font-weight: bold; margin-bottom: 10px; display: block; width: 100%; box-sizing: border-box; box-shadow: 0 4px 12px rgba(102, 187, 106, 0.2); transition: all 0.2s ease; }
     .btn-action:active { transform: translateY(2px); box-shadow: none; }
-    .btn-sub { background: linear-gradient(135deg, #F57C00 0%, #E65100 100%); color: white; border: none; box-shadow: 0 3px 8px rgba(230, 81, 0, 0.3); margin-bottom: 8px; }
-    #submitBtn { width: 100%; background: linear-gradient(135deg, #FF7043 0%, #F4511E 100%); color: white; padding: 15px; border: none; border-radius: 18px; cursor: pointer; font-size: 18px; font-weight: 900; letter-spacing: 1px; box-shadow: 0 6px 18px rgba(244, 81, 30, 0.3); transition: all 0.2s ease; margin-top: 10px; }
-    #submitBtn:active { transform: translateY(3px); box-shadow: 0 2px 6px rgba(244, 81, 30, 0.3); }
+    .btn-sub { background: linear-gradient(135deg, #66BB6A 0%, #43A047 100%); color: white; border: none; box-shadow: 0 3px 8px rgba(67, 160, 71, 0.3); margin-bottom: 8px; }
+    #submitBtn { width: 100%; background: linear-gradient(135deg, #66BB6A 0%, #4CAF50 100%); color: white; padding: 15px; border: none; border-radius: 18px; cursor: pointer; font-size: 18px; font-weight: 900; letter-spacing: 1px; box-shadow: 0 6px 18px rgba(76, 175, 80, 0.3); transition: all 0.2s ease; margin-top: 10px; }
+    #submitBtn:active { transform: translateY(3px); box-shadow: 0 2px 6px rgba(76, 175, 80, 0.3); }
     #output { margin-top: 18px; text-align: center; font-weight: bold; font-size: 15px; color: var(--accent-primary); line-height: 1.5; white-space: pre-wrap; }
 
     /* すりガラス風モーダル */
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(62, 39, 35, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 9999; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; }
-    .modal-content { background: rgba(250, 246, 240, 0.98); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); width: 100%; max-width: 600px; max-height: 90vh; border-radius: var(--radius-lg); padding: 22px 18px; box-sizing: border-box; overflow-y: auto; border: 1px solid rgba(255,255,255,0.5); position: relative; text-align: center; animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(51, 105, 30, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 9999; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; }
+    .modal-content { background: rgba(241, 248, 233, 0.98); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); width: 100%; max-width: 600px; max-height: 90vh; border-radius: var(--radius-lg); padding: 22px 18px; box-sizing: border-box; overflow-y: auto; border: 1px solid rgba(255,255,255,0.5); position: relative; text-align: center; animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
     .close-modal { position: absolute; top: 15px; right: 18px; font-size: 26px; color: var(--accent-primary); cursor: pointer; font-weight: bold; z-index: 1002; }
     
     #mapModal { padding: 0; }
@@ -251,16 +251,16 @@
     #mapFilterPanel { display: none; position: absolute; top: 75px; left: 15px; right: 15px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 15px; border-radius: var(--radius-m); box-shadow: 0 8px 24px rgba(0,0,0,0.15); border: 2px solid var(--accent-primary); z-index: 1001; animation: fadeIn 0.2s ease-out; max-height: calc(100vh - 130px); overflow-y: auto; }
     .filter-item { margin-bottom: 12px; }
     .filter-item label { font-size: 13px; margin-bottom: 4px; color: var(--text-main); }
-    .btn-show-all { background: linear-gradient(135deg, #FF8A65 0%, #FF7043 100%); color: white; border: none; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; box-shadow: var(--shadow-btn); }
+    .btn-show-all { background: linear-gradient(135deg, #81C784 0%, #66BB6A 100%); color: white; border: none; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; box-shadow: var(--shadow-btn); }
 
-    .custom-cluster { background: rgba(255, 112, 67, 0.9); border: 3px solid white; color: white; font-weight: bold; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 10px rgba(0,0,0,0.3); font-size: 14px; }
-    .custom-cluster-large { background: rgba(230, 81, 0, 0.95); transform: scale(1.1); }
+    .custom-cluster { background: rgba(102, 187, 106, 0.9); border: 3px solid white; color: white; font-weight: bold; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 10px rgba(0,0,0,0.3); font-size: 14px; }
+    .custom-cluster-large { background: rgba(67, 160, 71, 0.95); transform: scale(1.1); }
 
     /* ゲーム風ローディング画面 */
-    .loading-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(250, 246, 240, 0.95); backdrop-filter: blur(4px); z-index: 2000; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 15px; transition: opacity 0.3s ease, visibility 0.3s ease; }
+    .loading-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(241, 248, 233, 0.95); backdrop-filter: blur(4px); z-index: 2000; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 15px; transition: opacity 0.3s ease, visibility 0.3s ease; }
     .loading-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
     .loading-text { color: var(--accent-primary); font-size: 18px; font-weight: 900; letter-spacing: 2px; margin-top: 10px; }
-    .spinner { width: 50px; height: 50px; border: 6px solid rgba(255, 112, 67, 0.15); border-left-color: var(--accent-primary); border-radius: 50%; animation: spin 1s linear infinite; }
+    .spinner { width: 50px; height: 50px; border: 6px solid rgba(102, 187, 106, 0.15); border-left-color: var(--accent-primary); border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     
     /* =========================================
@@ -270,7 +270,7 @@
     .modal-success.active { display: flex; }
     .success-stage { position: relative; width: 280px; height: 280px; background: white; border-radius: 36px; box-shadow: 0 16px 40px rgba(0,0,0,0.25); display: flex; flex-direction: column; justify-content: center; align-items: center; }
 
-    .success-ripple { position: absolute; bottom: 100px; width: 50px; height: 16px; background: rgba(255, 122, 0, 0.25); border-radius: 50%; transform: scale(0); opacity: 0; }
+    .success-ripple { position: absolute; bottom: 100px; width: 50px; height: 16px; background: rgba(76, 175, 80, 0.25); border-radius: 50%; transform: scale(0); opacity: 0; }
     .success-ripple.animate { animation: ripple-effect 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.35s forwards; }
 
     .success-pin-wrapper { position: absolute; bottom: 105px; transform: translateY(-250px); opacity: 0; z-index: 2; }
@@ -278,7 +278,7 @@
 
     /* --- 弾けるエフェクト（ピン上部に配置） --- */
     .burst-wrapper { position: absolute; bottom: 148px; left: 50%; transform: translateX(-50%); width: 0; height: 0; z-index: 3; pointer-events: none; }
-    .flash-ring { position: absolute; top: -24px; left: -24px; width: 48px; height: 48px; border: 3px solid #ff7a00; border-radius: 50%; box-sizing: border-box; opacity: 0; }
+    .flash-ring { position: absolute; top: -24px; left: -24px; width: 48px; height: 48px; border: 3px solid #66BB6A; border-radius: 50%; box-sizing: border-box; opacity: 0; }
     .arm { position: absolute; top: 0; left: 0; width: 0; height: 0; }
     
     /* 放射アーム（中心軸） */
@@ -292,13 +292,13 @@
     .arm:nth-child(9)  { transform: rotate(75deg); }
     .arm:nth-child(10) { transform: rotate(100deg); }
     
-    .dot { position: absolute; top: -5px; left: -5px; width: 10px; height: 10px; border-radius: 50%; background-color: #ff7a00; opacity: 0; }
+    .dot { position: absolute; top: -5px; left: -5px; width: 10px; height: 10px; border-radius: 50%; background-color: #66BB6A; opacity: 0; }
     .arm:nth-child(even) .dot { background-color: #ffc107; width: 8px; height: 8px; left: -4px; }
 
     .burst-wrapper.animate .flash-ring { animation: ring-pop 0.35s cubic-bezier(0.1, 0.8, 0.3, 1) 0.45s forwards; }
     .burst-wrapper.animate .dot { animation: dot-pop 0.45s cubic-bezier(0.1, 0.8, 0.3, 1) 0.45s forwards; }
 
-    .success-status-text { position: absolute; bottom: 55px; font-size: 20px; font-weight: 900; color: #ff7a00; letter-spacing: 2px; opacity: 0; transform: translateY(10px); z-index: 1; text-shadow: 0 4px 12px rgba(255, 122, 0, 0.2); }
+    .success-status-text { position: absolute; bottom: 55px; font-size: 20px; font-weight: 900; color: #4CAF50; letter-spacing: 2px; opacity: 0; transform: translateY(10px); z-index: 1; text-shadow: 0 4px 12px rgba(76, 175, 80, 0.2); }
     .success-status-text.animate { animation: text-appear 0.4s ease-out 0.55s forwards; }
 
     @keyframes drop-bounce { 0% { transform: translateY(-220px) scale(0.8); opacity: 0; } 35% { opacity: 1; } 55% { transform: translateY(0) scaleY(0.7) scaleX(1.3); } 72% { transform: translateY(-16px) scaleY(1.15) scaleX(0.88); } 85% { transform: translateY(0) scaleY(0.95) scaleX(1.05); } 100% { transform: translateY(0) scale(1); opacity: 1; } }
@@ -313,7 +313,7 @@
     .btn-delete-history { position: absolute; top: 10px; right: 10px; background: transparent; border: none; cursor: pointer; padding: 6px; border-radius: 50%; transition: transform 0.2s, background 0.2s; display: flex; align-items: center; justify-content: center; }
     .btn-delete-history img { width: 22px; height: 22px; object-fit: contain; pointer-events: none; }
     .os-guide-container { margin-bottom: 18px; text-align: left; }
-    .os-toggle-btn { background: var(--accent-soft); color: var(--text-main); border: 1px solid #FFCC80; padding: 10px 12px; border-radius: var(--radius-s); width: 100%; font-weight: bold; cursor: pointer; font-size: 13px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; margin-bottom: 6px; }
+    .os-toggle-btn { background: var(--accent-soft); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 12px; border-radius: var(--radius-s); width: 100%; font-weight: bold; cursor: pointer; font-size: 13px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; margin-bottom: 6px; }
     .os-guide-content { background: white; padding: 12px 14px; border-radius: var(--radius-s); border: 1px solid var(--border-color); font-size: 13px; line-height: 1.6; color: var(--text-main); margin-bottom: 10px; }
     .os-guide-content ol { margin: 0; padding-left: 18px; }
     .pattern-menu { border: 1.5px solid var(--border-color); border-radius: var(--radius-s); overflow: hidden; background: white; margin-bottom: 10px; }
@@ -324,8 +324,8 @@
     .pattern-icon { font-size: 20px; display: inline-block; width: 36px; text-align: center; }
     .pattern-check { width: 20px; color: var(--accent-primary); font-weight: bold; font-size: 15px; display: inline-block; }
     .tag-container { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
-    .tag { background: var(--accent-light); color: var(--text-main); padding: 4px 10px; border-radius: 16px; font-size: 13px; display: inline-flex; align-items: center; font-weight: bold; border: 1px solid #FFCC80;}
-    .tag-close { margin-left: 6px; cursor: pointer; font-weight: bold; background: #A1887F; color: white; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 10px; }
+    .tag { background: var(--accent-light); color: var(--text-main); padding: 4px 10px; border-radius: 16px; font-size: 13px; display: inline-flex; align-items: center; font-weight: bold; border: 1px solid var(--border-color);}
+    .tag-close { margin-left: 6px; cursor: pointer; font-weight: bold; background: #81C784; color: white; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 10px; }
     .custom-neko-icon { width: auto !important; height: 38px !important; object-fit: contain; filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.3)); }
   </style>
 </head>
@@ -341,7 +341,7 @@
     
     <div id="successPin" class="success-pin-wrapper">
       <svg width="64" height="80" viewBox="0 0 64 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M32 80C32 80 58 48 58 32C58 17.6421 46.3579 6 32 6C17.6421 6 6 17.6421 6 32C6 48 32 80 32 80Z" fill="#FF7A00"/>
+        <path d="M32 80C32 80 58 48 58 32C58 17.6421 46.3579 6 32 6C17.6421 6 6 17.6421 6 32C6 48 32 80 32 80Z" fill="#66BB6A"/>
         <ellipse cx="32" cy="37" rx="10.5" ry="8.5" fill="white" />
         <circle cx="18.5" cy="23.5" r="3.8" fill="white" />
         <circle cx="27" cy="17" r="3.8" fill="white" />
@@ -666,9 +666,9 @@
 
 <script>
   // ==========================================
-  // GASのURL
+  // GASのURL (変更済み)
   // ==========================================
-  const gasURL = "https://script.google.com/macros/s/AKfycbxxNvrgs0vTWNF5W8SWpSoaeFRFF5fK0iypGjDB427Y8e9SPZn84eqma7GV8mGOzHJSIA/exec";
+  const gasURL = "https://script.google.com/macros/s/AKfycbzrQ10Aq9k8jNR7RAwcpSTvYFFLze5ZJvEo_eLURK0_Ck_7HTs0ycmDVfgUN_bCmzSP/exec";
 
   function createDynamicNekoIcon() {
     return L.icon({ iconUrl: 'icon-neko.png', className: 'custom-neko-icon', iconAnchor: [19, 38], popupAnchor: [0, -38] });
@@ -688,7 +688,7 @@
   if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); }); }
   
   window.addEventListener('DOMContentLoaded', () => {
-    // 修正箇所：東村全域が見渡せる座標とズームレベル（11）に変更
+    // 東村全域が見渡せる座標とズームレベル（11）
     map = L.map('map').setView([26.64, 128.16], 11); 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map); 
     map.on('click', function(e) { updateMarkerAndLocation(e.latlng); });
@@ -782,7 +782,7 @@
     const loader = document.getElementById('mapLoadingOverlay'); if (loader) loader.classList.remove('hidden');
     
     if (!aggMap) {
-      // 修正箇所：みんなのねこマップも東村全域が見渡せるように変更（ズーム12）
+      // みんなのねこマップも東村全域が見渡せるように（ズーム12）
       aggMap = L.map('aggregatedMap', { zoomControl: false }).setView([26.64, 128.16], 12);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(aggMap);
       L.control.zoom({ position: 'bottomleft' }).addTo(aggMap);
@@ -1205,7 +1205,7 @@
         closeModal('historyModal'); window.scrollTo({ top: 0, behavior: 'smooth' });
         
         document.getElementById('submitBtn').innerText = "修正して記録する";
-        document.getElementById('submitBtn').style.background = "linear-gradient(135deg, #FF7043 0%, #F4511E 100%)";
+        document.getElementById('submitBtn').style.background = "linear-gradient(135deg, #66BB6A 0%, #4CAF50 100%)";
       };
     } catch(e) { console.error("履歴の復元に失敗しました", e); }
   }
@@ -1309,7 +1309,7 @@
     earCutCounts["はい"] = 0; earCutCounts["いいえ"] = 0; earCutCounts["不明"] = 0; updateEarCutUI(); updateEarCutValue();
     patternCounts.clear(); selectedStandalonePatterns.clear(); currentPatternCategory = null; 
     document.getElementById('patternOtherInput').value = ""; document.getElementById('otherPatternContainer').classList.add('hidden'); renderPatternMenu();
-    document.getElementById('submitBtn').innerText = "記録する"; document.getElementById('submitBtn').style.background = "linear-gradient(135deg, #FF7043 0%, #F4511E 100%)";
+    document.getElementById('submitBtn').innerText = "記録する"; document.getElementById('submitBtn').style.background = "linear-gradient(135deg, #66BB6A 0%, #4CAF50 100%)";
   }
 
   function resizeImage(file) {
