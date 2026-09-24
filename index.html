@@ -690,7 +690,14 @@
   window.addEventListener('DOMContentLoaded', () => {
     // 東村全域が見渡せる座標とズームレベル（11）
     map = L.map('map').setView([26.64, 128.16], 11); 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map); 
+    
+    // ▼ 変更箇所：国土地理院地図（標準地図） ▼
+    L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">国土地理院</a>',
+      maxZoom: 18
+    }).addTo(map); 
+    // ▲ 変更箇所ここまで ▲
+    
     map.on('click', function(e) { updateMarkerAndLocation(e.latlng); });
     setTimeout(() => { map.invalidateSize(); }, 300);
 
@@ -784,7 +791,14 @@
     if (!aggMap) {
       // みんなのねこマップも東村全域が見渡せるように（ズーム12）
       aggMap = L.map('aggregatedMap', { zoomControl: false }).setView([26.64, 128.16], 12);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(aggMap);
+      
+      // ▼ 変更箇所：国土地理院地図（標準地図） ▼
+      L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">国土地理院</a>',
+        maxZoom: 18
+      }).addTo(aggMap);
+      // ▲ 変更箇所ここまで ▲
+      
       L.control.zoom({ position: 'bottomleft' }).addTo(aggMap);
       
       markersLayer = L.markerClusterGroup({
