@@ -834,36 +834,48 @@
 
   // ▼ 画像が選択された時にExifから位置情報と日時を自動入力 ▼
   document.getElementById('photo').addEventListener('change', async function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
 
-    try {
-      // exifrを使って画像のEXIF情報を取得
-      const exifData = await exifr.parse(file);
-      if (exifData) {
-        // 日時の設定
-        if (exifData.DateTimeOriginal) {
-          const date = new Date(exifData.DateTimeOriginal);
-          if (!isNaN(date.getTime())) {
-            const yyyy = date.getFullYear();
-            const mm = String(date.getMonth() + 1).padStart(2, '0');
-            const dd = String(date.getDate()).padStart(2, '0');
-            const hh = String(date.getHours()).padStart(2, '0');
-            
-            document.getElementById('dateInput').value = `${yyyy}-${mm}-${dd}`;
-            document.getElementById('hourInput').value = hh;
+    // 選択された複数ファイルを順番にチェック
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      try {
+        // exifrを使って画像のEXIF情報を取得
+        const exifData = await exifr.parse(file);
+        if (exifData) {
+          let locationFound = false;
+
+          // 位置情報の設定 (緯度・経度が存在する場合)
+          if (exifData.latitude !== undefined && exifData.longitude !== undefined) {
+            const latlng = L.latLng(exifData.latitude, exifData.longitude);
+            map.setView(latlng, 16); 
+            updateMarkerAndLocation(latlng);
+            locationFound = true;
+          }
+
+          // 日時の設定 (情報がある場合)
+          if (exifData.DateTimeOriginal) {
+            const date = new Date(exifData.DateTimeOriginal);
+            if (!isNaN(date.getTime())) {
+              const yyyy = date.getFullYear();
+              const mm = String(date.getMonth() + 1).padStart(2, '0');
+              const dd = String(date.getDate()).padStart(2, '0');
+              const hh = String(date.getHours()).padStart(2, '0');
+              
+              document.getElementById('dateInput').value = `${yyyy}-${mm}-${dd}`;
+              document.getElementById('hourInput').value = hh;
+            }
+          }
+
+          // 位置情報が見つかったら、以降の写真は処理せずにループを終了する
+          if (locationFound) {
+            break;
           }
         }
-
-        // 位置情報の設定 (緯度・経度が存在する場合)
-        if (exifData.latitude !== undefined && exifData.longitude !== undefined) {
-          const latlng = L.latLng(exifData.latitude, exifData.longitude);
-          map.setView(latlng, 16); 
-          updateMarkerAndLocation(latlng);
-        }
+      } catch (err) {
+        console.warn(`ファイル (${file.name}) のEXIFデータの読み取りに失敗しました`, err);
       }
-    } catch (err) {
-      console.warn("EXIFデータの読み取りに失敗しました", err);
     }
   });
 
